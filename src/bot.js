@@ -84,6 +84,9 @@ bot.on('text', async (ctx) => {
             warns[userId] = 0;
             return ctx.reply(`✅ Все предупреждения для ${username} были удалены.`);
         }
+        if (cmd === '.t') {
+            return ctx.sendDice
+        }
 
         if (cmd === '.ban') {
             await ctx.telegram.banChatMember(chatId, userId, { until_date: parseTime(timeArg) || undefined });
