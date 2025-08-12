@@ -32,6 +32,17 @@ bot.on('text', async (ctx) => {
         return ctx.reply(`Твой ID: ${ctx.from.id}\nНик: ${ctx.from.first_name} (${ctx.from.username || "без username"})`);
     }
 
+    if (cmd === '.joke') {
+        async function joker() {
+            const datah = await fetch("https://official-joke-api.appspot.com/random_joke")
+            const datah2 = await datah.json();
+            console.log(datah2);
+            return datah2
+        }
+        const joke = await joker();
+        return ctx.reply(`${ctx.from.username} is asking:\n ${joke.setup} - ${joke.punchline}`)
+    }
+
     if (cmd === '.hi') {
         return ctx.replyWithSticker("CAACAgIAAxkBAAIBHmiTGj9ENs-0xDk2KPdkXgu4yewpAALgVQACV_wBSubd-bDyhHK4NgQ");
     }
@@ -54,10 +65,10 @@ bot.on('text', async (ctx) => {
             if (warns[userId] >= 3) {
                 if (!muteHistory[userId]) muteHistory[userId] = 0;
                 muteHistory[userId]++;
-
+                
                 const days = muteHistory[userId];
                 const untilDate = muteTime(days);
-
+                
                 await ctx.telegram.restrictChatMember(chatId, userId, {
                     until_date: untilDate,
                     permissions: {
@@ -137,6 +148,7 @@ bot.on('text', async (ctx) => {
             });
             return ctx.reply('Пользователь размучен ✅');
         }
+
 
     } catch (err) {
         console.error(err);
