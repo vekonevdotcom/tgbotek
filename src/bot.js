@@ -31,7 +31,8 @@ bot.on('text', async (ctx) => {
     const reply = ctx.message.reply_to_message;
     const chatId = ctx.chat.id;
 
-    console.log(`${ctx.from.first_name} (${ctx.from.username}) пишет: ${ctx.chat.message}`)
+    
+    console.log(`${ctx.from.first_name} (${ctx.from.username}) пишет: ${ctx.from.message}`)
 
     if (cmd === '.me') {
         return ctx.reply(`Твой ID: ${ctx.from.id}\nНик: ${ctx.from.first_name} (${ctx.from.username || "без username"})`);
