@@ -32,6 +32,10 @@ bot.on('text', async (ctx) => {
         return ctx.reply(`Твой ID: ${ctx.from.id}\nНик: ${ctx.from.first_name} (${ctx.from.username || "без username"})`);
     }
 
+    if (cmd === '.dice') {
+        return ctx.sendDice();
+    }
+
     if (cmd === '.joke') {
         async function joker() {
             const datah = await fetch("https://official-joke-api.appspot.com/random_joke")
@@ -94,9 +98,6 @@ bot.on('text', async (ctx) => {
             }
             warns[userId] = 0;
             return ctx.reply(`✅ Все предупреждения для ${username} были удалены.`);
-        }
-        if (cmd === '.t') {
-            return ctx.sendDice
         }
 
         if (cmd === '.ban') {
