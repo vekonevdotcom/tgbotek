@@ -32,7 +32,7 @@ bot.on('text', async (ctx) => {
     const chatId = ctx.chat.id;
 
     
-    console.log(`${ctx.from.first_name} (${ctx.from.username}) пишет: ${ctx.from.message}`)
+    console.log(`${ctx.from.first_name} (@${ctx.from.username}, id: ${ctx.from.id}) пишет: ${ctx.text}`)
 
     if (cmd === '.me') {
         return ctx.reply(`Твой ID: ${ctx.from.id}\nНик: ${ctx.from.first_name} (${ctx.from.username || "без username"})`);
