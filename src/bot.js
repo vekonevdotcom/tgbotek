@@ -32,6 +32,14 @@ bot.on('text', async (ctx) => {
         return ctx.reply(`Твой ID: ${ctx.from.id}\nНик: ${ctx.from.first_name} (${ctx.from.username || "без username"})`);
     }
 
+    if (cmd === '.cns') {
+        console.log("test")
+    }
+
+    if (cmd === '.cns2') {
+        console.log(123)
+    }
+
     if (cmd === '.dice') {
         return ctx.sendDice();
     }
