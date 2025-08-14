@@ -4,9 +4,7 @@ const { token } = require("../config/config");
 const bot = new Telegraf(token);
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 4000 
-
-
+const port = process.env.PORT || 10000. 
 
 let warns = {};
 let muteHistory = {};
@@ -32,6 +30,8 @@ bot.on('text', async (ctx) => {
     const timeArg = args[1];
     const reply = ctx.message.reply_to_message;
     const chatId = ctx.chat.id;
+
+    console.log(`${ctx.from.first_name} (${ctx.from.username}) пишет: ${ctx.chat.message}`)
 
     if (cmd === '.me') {
         return ctx.reply(`Твой ID: ${ctx.from.id}\nНик: ${ctx.from.first_name} (${ctx.from.username || "без username"})`);
