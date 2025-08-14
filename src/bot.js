@@ -115,10 +115,57 @@ bot.on('text', async (ctx) => {
     if (adminCommands.includes(cmd) && !allowedUsers.includes(ctx.from.id)) {
         return ctx.reply('❌ У вас нет прав для этой команды.');
     }
+
+    if (cmd === '.cmds') {
+    const userIsAdmin = allowedUsers.includes(ctx.from.id);
+
+    const commonCmds = [
+        ".me [username] — информация о себе или другом",
+        ".dice — кинуть кубик 🎲",
+        ".joke — случайная шутка",
+        ".hi — стикер-привет",
+        ".ping — пинг бота",
+        ".uptime — аптайм бота",
+        ".admins — список админов",
+        ".server — информация о сервере"
+    ];
+
+    const adminCmds = [
+        ".warn — выдать предупреждение",
+        ".clearwarn — очистить предупреждения",
+        ".ban [время] — бан пользователя",
+        ".unban — разбан",
+        ".kick — кикнуть",
+        ".mute <время> — замутить",
+        ".unmute — размутить",
+        ".del — удалить сообщение",
+        ".purge [число] — удалить несколько сообщений",
+        ".lock — закрыть чат",
+        ".unlock — открыть чат"
+    ];
+
+    if (userIsAdmin) {
+        return ctx.reply(
+            `📜 Список всех команд:\n\n` +
+            `💬 Обычные:\n${commonCmds.join("\n")}\n\n` +
+            `🛡 Админские:\n${adminCmds.join("\n")}`
+        );
+    } else {
+        return ctx.reply(
+            `📜 Доступные команды:\n` +
+            commonCmds.join("\n")
+        );
+    }
+    }
+
     
+// YAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA
+
     if (adminCommands.includes(cmd) && !reply) {
         return ctx.reply('Ответь на сообщение пользователя.');
     }
+
+// YAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA
     
     if (cmd === '.lock') {
         await ctx.telegram.setChatPermissions(chatId, { can_send_messages: false });
