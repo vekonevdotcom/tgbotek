@@ -31,8 +31,9 @@ function formatUptime(msTime) {
     return `${days}д ${hours % 24}ч ${minutes % 60}м ${seconds % 60}с`;
 }
 
-// Список ID админов
-const allowedUsers = [5431783008, 1107295520];
+// wdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwd
+let allowedUsers = [5431783008, 1107295520];
+// wdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwdwdwdwddwdwdwd
 
 bot.on('text', async (ctx) => {
     const message = ctx.message.text;
@@ -158,15 +159,6 @@ bot.on('text', async (ctx) => {
     }
     }
 
-    
-// YAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA
-
-    if (adminCommands.includes(cmd) && !reply) {
-        return ctx.reply('Ответь на сообщение пользователя.');
-    }
-
-// YAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA
-    
     if (cmd === '.lock') {
         await ctx.telegram.setChatPermissions(chatId, { can_send_messages: false });
         return ctx.reply('🔒 Чат заблокирован.');
@@ -177,9 +169,62 @@ bot.on('text', async (ctx) => {
         return ctx.reply('🔓 Чат разблокирован.');
     }
     
+// YAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA
+
+    if (adminCommands.includes(cmd) && !reply) {
+        return ctx.reply('Ответь на сообщение пользователя.');
+    }
+
+// YAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA
+
+    
+
+
+
     const userId = reply?.from?.id;
     const username = reply?.from?.username || reply?.from?.first_name;
+
     
+    if (cmd === '.admin') {
+        // Только список
+        if (!args[1]) {
+            let adminList = allowedUsers.map(id => `🆔 ${id}`).join("\n");
+            return ctx.reply(
+                `🛡 Список админов:\n` +
+                (adminList || "Нет админов")
+            );
+        }
+        
+        // Только админы могут управлять списком
+        if (!allowedUsers.includes(ctx.from.id)) {
+            return ctx.reply('❌ У вас нет прав для этой команды.');
+        }
+        
+        if (!reply) {
+            return ctx.reply('❌ Ответьте на сообщение пользователя.');
+        }
+        
+        const targetId = reply.from.id;
+        const targetName = reply.from.username || reply.from.first_name;
+        
+        if (args[1].toLowerCase() === 'add') {
+            if (allowedUsers.includes(targetId)) {
+                return ctx.reply(`ℹ️ ${targetName} уже является админом.`);
+            }
+            allowedUsers.push(targetId);
+            return ctx.reply(`✅ ${targetName} назначен админом.`);
+        }
+
+        if (args[1].toLowerCase() === 'del') {
+            if (!allowedUsers.includes(targetId)) {
+                return ctx.reply(`ℹ️ ${targetName} не является админом.`);
+            }
+           allowedUsers = allowedUsers.filter(id => id !== targetId);
+            return ctx.reply(`❌ ${targetName} больше не админ.`);
+        }
+        }
+
+
     try {
         if (cmd === '.warn') {
             if (!warns[userId]) warns[userId] = 0;
