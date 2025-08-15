@@ -1,5 +1,7 @@
 const { startTime, muteTime, parseTime, formatUptime } = require("./times.js")
 const { allowedUsers } = require("./allowedUsers.js")
+let warns = {};
+let muteHistory = {};
 function infbot(bot) {
     bot.on('text', async (ctx) => {
     const message = ctx.message.text;
@@ -254,4 +256,4 @@ function infbot(bot) {
 });
 }
 
-module.exports = { infbot }
+module.exports = { infbot, warns, warnsCount, muteHistory };
