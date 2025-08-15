@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 10000;
 const { startTime, muteTime, parseTime, formatUptime } = require("./times.js")
 const { allowedUsers } = require("./allowedUsers.js")
-const { infbot, warns, warnsCount, muteHistory } = require("./botek.js")
+const { infbot, warns, muteHistory } = require("./botek.js")
 
 infbot(bot)
 

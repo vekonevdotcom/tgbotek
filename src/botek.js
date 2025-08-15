@@ -256,4 +256,4 @@ function infbot(bot) {
 });
 }
 
-module.exports = { infbot, warns, warnsCount, muteHistory };
+module.exports = { infbot, warns, muteHistory };
